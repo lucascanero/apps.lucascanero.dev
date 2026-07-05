@@ -58,6 +58,12 @@
   .topbar-links a { color: var(--haze); text-decoration: none; transition: color .15s; }
   .topbar-links a:hover { color: var(--text); }
   .topbar-links a.ghhl:hover { color: var(--amber); }
+  .topbar-links a.more-apps {
+    color: var(--amber); border: 1px solid var(--line);
+    padding: 7px 12px; border-radius: 8px;
+    transition: border-color .15s, background .15s;
+  }
+  .topbar-links a.more-apps:hover { border-color: var(--amber); background: rgba(255,176,0,.08); }
 
   /* ---------- hero ---------- */
   .hero { padding: 84px 0 64px; position: relative; }
@@ -200,7 +206,7 @@
   @media (max-width: 760px) {
     .grid { grid-template-columns: 1fr; }
     .install-grid { grid-template-columns: 1fr; }
-    .topbar-links a:not(.ghhl) { display: none; }
+    .topbar-links a:not(.ghhl):not(.more-apps) { display: none; }
     .board-cols, .board-row { grid-template-columns: 1.3fr 1fr 0.9fr; }
     .board-cols span:nth-child(4), .board-cols span:nth-child(5),
     .board-row > *:nth-child(4), .board-row > *:nth-child(5) { display: none; }
@@ -224,6 +230,7 @@
       <a href="#features">Features</a>
       <a href="#install">Install</a>
       <a class="ghhl" href="https://github.com/lucascanero/edreams-flex-scanner">GitHub ↗</a>
+      <a class="more-apps" href="https://apps.lucascanero.dev">More apps ↗</a>
     </nav>
   </div>
 </div>
