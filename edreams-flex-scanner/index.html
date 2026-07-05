@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>eDreams Flex Scanner — cheapest flights across flexible dates</title>
 <meta name="description" content="A Chrome extension that sweeps every date combination on eDreams and ranks the cheapest flights by number of nights." />
+<link rel="icon" type="image/png" href="img/icons/favicon.png" />
+<link rel="apple-touch-icon" href="img/icons/icon128.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -207,11 +209,37 @@
     .grid { grid-template-columns: 1fr; }
     .install-grid { grid-template-columns: 1fr; }
     .topbar-links a:not(.ghhl):not(.more-apps) { display: none; }
-    .board-cols, .board-row { grid-template-columns: 1.3fr 1fr 0.9fr; }
-    .board-cols span:nth-child(4), .board-cols span:nth-child(5),
-    .board-row > *:nth-child(4), .board-row > *:nth-child(5) { display: none; }
-    .board-row .price { display: inline-flex !important; justify-self: start; }
-    .board-cols span.price-col { display: inline-block !important; }
+    .topbar-links { gap: 12px; }
+    .topbar-links a { white-space: nowrap; }
+    .topbar-links a.more-apps { padding: 6px 9px; }
+    .brand { letter-spacing: 0.08em; font-size: 12px; }
+
+    .board { margin-top: 44px; padding: 16px 14px; }
+    .board-head { flex-wrap: wrap; gap: 6px 12px; }
+    .board-cols { display: none; }
+    .board-row {
+      grid-template-columns: 1fr 1fr auto;
+      grid-template-areas:
+        "route route price"
+        "out   back  nts";
+      column-gap: 10px; row-gap: 10px;
+      padding: 12px 2px;
+    }
+    .board-row .route { grid-area: route; }
+    .board-row .out   { grid-area: out; }
+    .board-row .back  { grid-area: back; }
+    .board-row .nts   { grid-area: nts; justify-self: end; }
+    .board-row .price { grid-area: price; }
+    .board-row .out::before  { content: "out"; }
+    .board-row .back::before { content: "back"; }
+    .board-row .nts::before  { content: "nts"; }
+    .board-row .out::before, .board-row .back::before, .board-row .nts::before {
+      display: block; font-family: var(--mono); font-size: 9px;
+      letter-spacing: .16em; text-transform: uppercase; color: var(--haze);
+      margin-bottom: 4px;
+    }
+    .flaps { gap: 2px; }
+    .flap { min-width: 16px; height: 26px; padding: 0 3px; font-size: 13px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -428,10 +456,10 @@
     rows.forEach((r) => {
       const row = document.createElement("div");
       row.className = "board-row";
-      const route = document.createElement("span"); route.appendChild(flapsFor(r.route, ""));
-      const out = document.createElement("span"); out.appendChild(flapsFor(r.out, ""));
-      const back = document.createElement("span"); back.appendChild(flapsFor(r.back, ""));
-      const nts = document.createElement("span"); nts.appendChild(flapsFor(r.nts, ""));
+      const route = document.createElement("span"); route.className = "route"; route.appendChild(flapsFor(r.route, ""));
+      const out = document.createElement("span"); out.className = "out"; out.appendChild(flapsFor(r.out, ""));
+      const back = document.createElement("span"); back.className = "back"; back.appendChild(flapsFor(r.back, ""));
+      const nts = document.createElement("span"); nts.className = "nts"; nts.appendChild(flapsFor(r.nts, ""));
       const price = document.createElement("span"); price.className = "price"; price.appendChild(flapsFor("€" + r.price, r.cls));
       row.append(route, out, back, nts, price);
       body.appendChild(row);
